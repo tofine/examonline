@@ -1,0 +1,21 @@
+@import "base";
+:global {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.wtdc {
+  text-align: center;
+  min-height: 100vh;
+}
+.wtdc-header {
+  width: 100%;
+  padding: 20px 30px;
+}
+.wtdc-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}

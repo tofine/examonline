@@ -1,0 +1,15 @@
+
+$color: red;
+
+.content {
+  text-align: center;
+  color: $color;
+  margin-top: 200px;
+}
+.img {
+  width: 100px;
+  height: 100px;
+  background-image: url(~@/assets/images/logo.png);
+  display: inline-block;
+  background-size: 100% 100%;
+}
