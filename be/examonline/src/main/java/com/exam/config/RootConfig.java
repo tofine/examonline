@@ -11,14 +11,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionManager;
 
 import javax.sql.DataSource;
 
-@MapperScan(basePackages = "connect")
+@MapperScan(basePackages = "com.exam.dao")
 @Configuration
 @PropertySource("classpath:jdbc.properties")
 public class RootConfig {
