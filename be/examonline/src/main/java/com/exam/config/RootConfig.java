@@ -25,6 +25,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionManager;
 import redis.clients.jedis.JedisPoolConfig;
@@ -33,7 +34,7 @@ import javax.sql.DataSource;
 
 @EnableCaching
 @MapperScan(basePackages = "com.exam.dao")
-@ComponentScan(basePackages="com.exam.entity")
+@ComponentScan(basePackages={"com.exam.biz","com.exam.dao"})
 @Configuration
 @PropertySource({"classpath:jdbc.properties","classpath:redis.properties"})
 public class RootConfig {
@@ -112,8 +113,8 @@ public class RootConfig {
     public RedisTemplate<String,Object> redisT(RedisConnectionFactory connectionFactory){
         RedisTemplate<String,Object> t=new RedisTemplate<>();
         t.setConnectionFactory(connectionFactory);
-        /*t.setKeySerializer(new StringRedisSerializer());
-        t.setValueSerializer(new GenericJackson2JsonRedisSerializer());*/
+        t.setKeySerializer(new StringRedisSerializer());
+        t.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         return t;
     }
 

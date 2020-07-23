@@ -1,7 +1,6 @@
 package connect;
 
 import com.exam.config.RootConfig;
-import com.exam.entity.TestRedisCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -31,11 +30,6 @@ public class JedisConnectTest {
         ValueOperations valueOperations = template.opsForValue();
         valueOperations.set("first","hello word");
         System.out.println(valueOperations.get("first"));
-    }
-
-    @Test
-    public void testCache(){
-        System.out.println(ioc.getBean(TestRedisCache.class).invokeCache());
     }
 
 }
