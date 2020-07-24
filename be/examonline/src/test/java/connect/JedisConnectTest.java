@@ -19,8 +19,8 @@ public class JedisConnectTest {
     @Test
     public void connect(){
         Jedis jedis=new Jedis("39.98.113.19");
-//        jedis.auth("123456");
-//        jedis.set("test","success");
+        jedis.auth("123456");
+        jedis.set("test","success");
         System.out.println(jedis.get("test"));
     }
 
@@ -28,8 +28,9 @@ public class JedisConnectTest {
     public void redisTemplateTest(){
         RedisTemplate template=ioc.getBean(RedisTemplate.class);
         ValueOperations valueOperations = template.opsForValue();
-        valueOperations.set("first","hello word");
-        System.out.println(valueOperations.get("first"));
+//        valueOperations.set("first","hello word");
+//        System.out.println(valueOperations.get("first"));
+        System.out.println(template.getExpire("first"));
     }
 
 }

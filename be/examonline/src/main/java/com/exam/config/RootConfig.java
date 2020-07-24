@@ -18,6 +18,7 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -79,24 +80,20 @@ public class RootConfig {
     public RedisConnectionFactory redisCF(JedisPoolConfig jedisPoolConfig) {
         //单机版jedis
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        //设置redis服务器的host或者ip地址
+        //设置redis服务器的host和密码
         redisStandaloneConfiguration.setHostName(env.getProperty("redis.host"));
-        //获得默认的连接池构造器
-        JedisClientConfiguration.JedisPoolingClientConfigurationBuilder jpccb =
-                (JedisClientConfiguration.JedisPoolingClientConfigurationBuilder)
-                        JedisClientConfiguration.builder();
-        jpccb.poolConfig(jedisPoolConfig);
-        //通过构造器来构造jedis客户端配置
-        JedisClientConfiguration jedisClientConfiguration = jpccb.build();
+        redisStandaloneConfiguration.setPassword(RedisPassword.of(env.getProperty("redis.auth")));
+
+        //构造客户端配置对象，配置连接池
+        JedisClientConfiguration jedisClientConfiguration=
+                JedisClientConfiguration.builder()
+                        .usePooling()
+                        .poolConfig(jedisPoolConfig)
+                        .build();
+
         //单机配置 + 客户端配置 = jedis连接工厂
         return new JedisConnectionFactory(redisStandaloneConfiguration, jedisClientConfiguration);
     }
-    /*@Bean
-    public RedisStandaloneConfiguration redisSC(){
-        RedisStandaloneConfiguration sc=new RedisStandaloneConfiguration();
-        sc.setHostName(env.getProperty("redis.host"));
-        return sc;
-    }*/
 
     @Bean
     public JedisPoolConfig redisPC(){
