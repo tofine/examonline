@@ -23,13 +23,12 @@
 <script src="js/jquery.form.js"></script>
 <script>
     window.onload=function () {
-        const token = "a66463f5-b38b-44a3-b06d-cf616584d526";
+        const token = "37a14a10-8927-429b-81eb-a25d2c0c5a96";
         window.localStorage.setItem('token',token);
     };
     const ac=document.getElementById('form');
     alert(ac);
-    ac.setAttribute("action","http://localhost:8080/examonline/userInfo?token="
-        +window.localStorage.getItem('token'));//从本地存储获取token
+    ac.setAttribute("action","http://localhost:8080/examonline/userInfo?token=" +window.localStorage.getItem('token'));//从本地存储获取token
     alert(ac.getAttribute("action"));
 
     ac.onsubmit=function () {

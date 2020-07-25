@@ -29,7 +29,8 @@ public class UserInfoController {
      * @throws IOException
      */
      @PostMapping("/userInfo")
-    public Result updateUserInfo(@RequestPart("file") MultipartFile file, UserInfo userInfo,HttpServletRequest request) throws IOException {
+//    public Result updateUserInfo(@RequestPart("file") MultipartFile file, UserInfo userInfo,HttpServletRequest request) throws IOException {
+    public Result updateUserInfo(@RequestPart(required = false,value = "file") MultipartFile file, UserInfo userInfo,HttpServletRequest request) throws IOException {
          User user=TokenUtil.getUser(request,redisTemplate);
          userInfo.setUserId(user.getUserId());
          if(file!=null)

@@ -11,4 +11,13 @@ public class EnumCastTest {
         Assert.assertEquals(Sex.男,Sex.class.getEnumConstants()[1]);
     }
 
+    @Test
+    public void test1(){
+        System.out.println(new A().a);
+    }
+
+}
+
+class A{
+    public byte[] a;
 }

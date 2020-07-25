@@ -8,7 +8,7 @@ public interface UserInfoDao {
     //通过id查找用户信息
     public UserInfo findUserInfoById(String id);
     //新增用户信息
-    public int addUserInfo(UserInfo userInfo);
+    public int initUserInfo(String userId);
     //更新用户信息
     public int updateUserInfo(UserInfo userInfo);
 }

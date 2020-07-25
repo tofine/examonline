@@ -3,18 +3,38 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.exam.dao.UserInfoDao">
-    <insert id="addUserInfo">
-        insert into user_info
-        values (#{userId},#{nickname},#{headSculpture},
-            #{sex},#{introduce},#{realName},
-            #{mail},#{phoneNumber},#{qqNumber})
+    <insert id="initUserInfo">
+        insert into user_info(user_id) values (#{userId})
     </insert>
 
     <update id="updateUserInfo">
-        update user_info set
-            nickname=#{nickname},head_sculpture=#{headSculpture},
-            sex=#{sex},introduce=#{introduce},real_name=#{realName},
-            mail=#{mail},phone_number=#{phoneNumber},qq_number=#{qqNumber}
+        update user_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="nickname!=null and nickname!=''">
+                nickname=#{nickname},
+            </if>
+            <if test="headSculpture!=null">
+                head_sculpture=#{headSculpture},
+            </if>
+            <if test="sex!=null">
+                sex=#{sex},
+            </if>
+            <if test="introduce!=null and introduce!=''">
+                introduce=#{introduce},
+            </if>
+            <if test="realName!=null and realName!=''">
+                real_name=#{realName},
+            </if>
+            <if test="mail!=null and mail!=''">
+                mail=#{mail},
+            </if>
+            <if test="phoneNumber!=null and phoneNumber!=''">
+                phone_number=#{phoneNumber},
+            </if>
+            <if test="qqNumber!=null and qqNumber!=''">
+                qq_number=#{qqNumber}
+            </if>
+        </trim>
         where user_id=#{userId}
     </update>
 
