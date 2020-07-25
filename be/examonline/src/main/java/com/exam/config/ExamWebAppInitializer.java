@@ -17,4 +17,5 @@ public class ExamWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
 }

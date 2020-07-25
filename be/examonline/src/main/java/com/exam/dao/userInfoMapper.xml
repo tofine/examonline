@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.dao.UserInfoDao">
+    <insert id="addUserInfo">
+        insert into user_info
+        values (#{userId},#{nickname},#{headSculpture},
+            #{sex},#{introduce},#{realName},
+            #{mail},#{phoneNumber},#{qqNumber})
+    </insert>
+
+    <update id="updateUserInfo">
+        update user_info set
+            nickname=#{nickname},head_sculpture=#{headSculpture},
+            sex=#{sex},introduce=#{introduce},real_name=#{realName},
+            mail=#{mail},phone_number=#{phoneNumber},qq_number=#{qqNumber}
+        where user_id=#{userId}
+    </update>
+
+    <select id="findUserInfoById" resultType="com.exam.entity.UserInfo">
+        select * from user_info where user_id=#{id}
+    </select>
+</mapper>

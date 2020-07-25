@@ -28,14 +28,11 @@ public class Result{
         this.code=code;
         this.msg=msg;
         this.data=data;
-        this.count=0;
     }
 
     public Result(int code,String msg){
         this.code=code;
         this.msg=msg;
-        this.data=null;
-        this.count=0;
     }
 }
 

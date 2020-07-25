@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.exam.dao.UserDao">
     <insert id="addUser" parameterType="com.exam.entity.User">
-        insert into user_info values (#{userId},#{password},#{role})
+        insert into user values (#{userId},#{password},#{role})
     </insert>
 
     <select id="getUserByIdAndPwd" resultType="com.exam.entity.User">
-        select * from user_info where user_id=#{id} and password=#{pwd}
+        select * from user where user_id=#{id} and password=#{pwd}
     </select>
 
 </mapper>

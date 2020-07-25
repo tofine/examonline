@@ -29,6 +29,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
@@ -38,6 +39,7 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages={"com.exam.biz","com.exam.dao"})
 @Configuration
 @PropertySource({"classpath:jdbc.properties","classpath:redis.properties"})
+@EnableTransactionManagement
 public class RootConfig {
 
     private Environment env;
@@ -66,15 +68,10 @@ public class RootConfig {
     }
 
     @Bean
-    public TransactionManager transactionManager(){
-        return new DataSourceTransactionManager(dataSource());
+    public TransactionManager transactionManager(DataSource dataSource){
+        return new DataSourceTransactionManager(dataSource);
     }
 
-    /*@Bean
-    public RedisConnectionFactory redisCF(){
-        JedisConnectionFactory cf=new JedisConnectionFactory(redisSC());
-        return cf;
-    }*/
 
     @Bean
     public RedisConnectionFactory redisCF(JedisPoolConfig jedisPoolConfig) {
