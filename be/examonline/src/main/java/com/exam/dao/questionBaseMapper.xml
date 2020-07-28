@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.dao.QuestionBaseDao">
+    <insert id="addBase">
+        insert into question_base (name,level,image,classify)
+        values (#{name},#{level},#{image},#{classify})
+    </insert>
+    <update id="baseQuestionCountIncrement">
+        update question_base set count=count+1 where base_id=#{baseId}
+    </update>
+    <update id="updateBase">
+        update question_base
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="level!=null">
+                level=#{level},
+            </if>
+            <if test="image!=null and image.length!=0">
+                image=#{image},
+            </if>
+            <if test="classify!=null">
+                classify=#{classify}
+            </if>
+        </trim>
+        where base_id=#{baseId}
+    </update>
+    <delete id="deleteBase">
+        delete from question_base where base_id=#{baseId}
+    </delete>
+
+    <select id="getAllDailyBases" resultType="com.exam.entity.QuestionBase">
+        select * from question_base where classify=1
+    </select>
+    <select id="getLimitDailyBases" resultType="com.exam.entity.QuestionBase">
+        select * from question_base where classify=1
+        limit #{param1},#{param2}
+    </select>
+    <select id="getAllSubjectBases" resultType="com.exam.entity.QuestionBase">
+        select * from question_base where classify=2
+    </select>
+    <select id="getLimitSubjectBases" resultType="com.exam.entity.QuestionBase">
+        select * from question_base where classify=2
+        limit #{param1},#{param2}
+    </select>
+    <select id="getAllMockBases" resultType="com.exam.entity.QuestionBase">
+        select * from question_base where classify=3
+    </select>
+    <select id="getLimitMockBases" resultType="com.exam.entity.QuestionBase">
+        select * from question_base where classify=3
+        limit #{param1},#{param2}
+    </select>
+    <select id="getDailyBaseCount" resultType="java.lang.Integer">
+        select count(*) from question_base where classify=1
+    </select>
+    <select id="getSubjectBaseCount" resultType="java.lang.Integer">
+        select count(*) from question_base where classify=2
+    </select>
+    <select id="getMockBaseCount" resultType="java.lang.Integer">
+        select count(*) from question_base where classify=3
+    </select>
+</mapper>

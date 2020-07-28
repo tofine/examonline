@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.dao.QuestionDao">
+
+    <insert id="addQuestion">
+        insert into question (name,choose_a,choose_b,choose_c,answer,baseId)
+        values (#{name},#{chooseA},#{chooseB},#{chooseC},#{answer},#{baseId})
+    </insert>
+    <update id="updateQuestion">
+        update question
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="chooseA!=null and chooseA!=''">
+                choose_a=#{chooseA},
+            </if>
+            <if test="chooseB!=null and chooseB!=''">
+                choose_b=#{chooseB},
+            </if>
+            <if test="chooseC!=null and chooseC!=''">
+                choose_c=#{chooseC},
+            </if>
+            <if test="answer!=null and 'abcABC'.indexOf(answer)!=-1">
+                answer=#{answer},
+            </if>
+            <if test="baseId!=null">
+                base_id=#{baseI}
+            </if>
+        </trim>
+    </update>
+    <delete id="deleteQuestion">
+        delete from question where question_id=#{questionId}
+    </delete>
+    <select id="getAllQuestionsByBase" resultType="com.exam.entity.Question">
+        select * from question where base_id=#{baseId}
+    </select>
+    <select id="getLimitQuestionsByBase" resultType="com.exam.entity.Question">
+        select * from question where base_id=#{param1} limit #{param2},#{param3}
+    </select>
+    <select id="getExaminationQuestionsByBase" resultType="com.exam.entity.ExaminationQuestion">
+        select question_id,name,choose_a,choose_b,choose_c
+        from question
+        where base_id=#{baseId}
+    </select>
+    <select id="getLimitExaminationQuestionsByBase" resultType="com.exam.entity.ExaminationQuestion">
+        select question_id,name,choose_a,choose_b,choose_c
+        from question
+        where base_id=#{param1}
+        limit #{param2},#{param3}
+    </select>
+    <select id="getExaminationAnswersByBase" resultType="com.exam.entity.ExaminationAnswer">
+        select question_id,answer
+        from question
+        where base_id=#{baseId}
+    </select>
+</mapper>

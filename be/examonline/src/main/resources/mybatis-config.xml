@@ -18,5 +18,8 @@
     <mappers>
         <mapper resource="com/exam/dao/userMapper.xml"/>
         <mapper resource="com/exam/dao/userInfoMapper.xml"/>
+        <mapper resource="com/exam/dao/questionBaseMapper.xml"/>
+        <mapper resource="com/exam/dao/questionMapper.xml"/>
+        <mapper resource="com/exam/dao/favoriteMapper.xml"/>
     </mappers>
 </configuration>

@@ -19,6 +19,13 @@ public class UserInfoBizImpl implements UserInfoBiz{
 
     @Override
     @Transactional
+    public int initUserInfo(String userId){
+        return userInfoDao.initUserInfo(userId);
+    }
+
+
+    @Override
+    @Transactional
     public int updateUserInfo(UserInfo userInfo) {
         return userInfoDao.updateUserInfo(userInfo);
     }

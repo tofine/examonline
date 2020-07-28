@@ -13,11 +13,8 @@ public class EnumCastTest {
 
     @Test
     public void test1(){
-        System.out.println(new A().a);
+        System.out.println("abcABC".indexOf('d'));
     }
 
 }
 
-class A{
-    public byte[] a;
-}

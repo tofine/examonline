@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.dao.FavoriteDao">
+
+    <insert id="setFavorite" parameterType="com.exam.entity.Favorite">
+        insert into favorite (user_id,base_id,question_id)
+        values (#{userId},#{baseId},#{questionId})
+    </insert>
+    <delete id="cancelFavorite">
+        delete from favorite
+        <if test="questionId==null">
+            where base_id=#{baseId} and question_id=NULL
+        </if>
+        <if test="questionId!=null">
+            where question_id=#{questionId}
+        </if>
+    </delete>
+</mapper>
