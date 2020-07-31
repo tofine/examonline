@@ -5,8 +5,8 @@
 <mapper namespace="com.exam.dao.QuestionDao">
 
     <insert id="addQuestion">
-        insert into question (name,choose_a,choose_b,choose_c,answer,baseId)
-        values (#{name},#{chooseA},#{chooseB},#{chooseC},#{answer},#{baseId})
+        insert into question (name,choose_a,choose_b,choose_c,answer,baseId,score)
+        values (#{name},#{chooseA},#{chooseB},#{chooseC},#{answer},#{baseId},#{score})
     </insert>
     <update id="updateQuestion">
         update question
@@ -27,9 +27,13 @@
                 answer=#{answer},
             </if>
             <if test="baseId!=null">
-                base_id=#{baseI}
+                base_id=#{baseId},
+            </if>
+            <if test="score!=null">
+                score=#{score}
             </if>
         </trim>
+        where question_id=#{questionId}
     </update>
     <delete id="deleteQuestion">
         delete from question where question_id=#{questionId}
@@ -52,8 +56,11 @@
         limit #{param2},#{param3}
     </select>
     <select id="getExaminationAnswersByBase" resultType="com.exam.entity.ExaminationAnswer">
-        select question_id,answer
+        select question_id,answer,score
         from question
         where base_id=#{baseId}
+    </select>
+    <select id="getQuestionCountByBase" resultType="java.lang.Integer">
+        select count(*) from question where base_id=#{baseId}
     </select>
 </mapper>

@@ -2,7 +2,6 @@ package com.exam.biz.impl;
 
 import com.exam.biz.QuestionBiz;
 import com.exam.dao.QuestionDao;
-import com.exam.entity.ExaminationQuestion;
 import com.exam.entity.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -56,16 +55,9 @@ public class QuestionBizImpl implements QuestionBiz {
     }
 
     @Override
-    @Cacheable(value ="question",key="'getExaminationQuestionsByBase'+#baseId")
     @Transactional
-    public ArrayList<ExaminationQuestion> getExaminationQuestionsByBase(Integer baseId) {
-        return questionDao.getExaminationQuestionsByBase(baseId);
+    public int getQuestionCountByBase(Integer baseId) {
+        return questionDao.getQuestionCountByBase(baseId);
     }
 
-    @Override
-    @Cacheable(value = "question",key="'getLimitExaminationQuestionsByBase'+#baseId+','+#page+','+#limit")
-    @Transactional
-    public ArrayList<ExaminationQuestion> getLimitExaminationQuestionsByBase(Integer baseId, Integer page, Integer limit) {
-        return questionDao.getLimitExaminationQuestionsByBase(baseId, (page-1)*limit, limit);
-    }
 }

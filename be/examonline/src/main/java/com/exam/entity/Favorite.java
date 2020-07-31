@@ -6,9 +6,7 @@ import lombok.Data;
  * 收藏夹记录
  */
 @Data
-public class Favorite {
-    Integer id;
+public class Favorite{
     Integer userId;   //用户
     Integer baseId;   //收藏的题库
-    Integer questionId;  //收藏的题目
 }

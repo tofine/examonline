@@ -32,7 +32,7 @@ public class QuestionBaseBizImpl implements QuestionBaseBiz {
     @Cacheable(value = "questionBase",key="'getLimitDailyBases'+#page+','+#limit")
     @Transactional
     public ArrayList<QuestionBase> getLimitDailyBases(int page, int limit) {
-        return questionBaseDao.getLimitSubjectBases((page-1)*limit,limit);
+        return questionBaseDao.getLimitDailyBases((page-1)*limit,limit);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class QuestionBaseBizImpl implements QuestionBaseBiz {
     @Cacheable(value = "questionBase",key="'getLimitMockBases'+#page+','+#limit")
     @Transactional
     public ArrayList<QuestionBase> getLimitMockBases(int page, int limit) {
-        return questionBaseDao.getLimitSubjectBases((page-1)*limit,limit);
+        return questionBaseDao.getLimitMockBases((page-1)*limit,limit);
     }
 
     @Override

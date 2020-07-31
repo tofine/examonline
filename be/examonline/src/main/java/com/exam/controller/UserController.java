@@ -31,9 +31,9 @@ public class UserController {
         User user1=userBiz.getUserByFormInfo(user);
         if(user1!=null){//登录成功
             String token= TokenUtil.save(user1,redisTemplate);
-            return new Result(Result.OK,"登录成功",token);
+            return Result.success("登录成功",token);
         }
-        return new Result(Result.FAIL,"登录失败",null);
+        return Result.error("登录失败");
     }
 
     /**
@@ -46,15 +46,15 @@ public class UserController {
         log.info("user id="+user.getUserId()+" are register");
         int code = userBiz.registerUser(user);
         if (code==1)
-            return new Result(Result.OK,"注册成功");
-        else return new Result(Result.FAIL,"用户名已存在");
+            return Result.success("注册成功");
+        else return Result.error("用户名已存在");
     }
 
     @DeleteMapping("/logout")
     public Result logout(HttpServletRequest request){
         if(TokenUtil.drop(request,redisTemplate))
-            return new Result(Result.OK,"注销成功");
-        return new Result(Result.FAIL,"未登录");
+            return Result.success("注销成功");
+        return Result.error("未登录");
     }
 
 

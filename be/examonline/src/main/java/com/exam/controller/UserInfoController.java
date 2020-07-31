@@ -20,7 +20,6 @@ public class UserInfoController {
     private UserInfoBiz userInfoBiz;
     private RedisTemplate<String,Object> redisTemplate;
 
-    private final String PATH="E://uploads/headSculpture/";
     /**
      *更新用户基本信息
      * @param
@@ -29,16 +28,15 @@ public class UserInfoController {
      * @throws IOException
      */
      @PostMapping("/userInfo")
-//    public Result updateUserInfo(@RequestPart("file") MultipartFile file, UserInfo userInfo,HttpServletRequest request) throws IOException {
     public Result updateUserInfo(@RequestPart(required = false,value = "file") MultipartFile file, UserInfo userInfo,HttpServletRequest request) throws IOException {
          User user=TokenUtil.getUser(request,redisTemplate);
          userInfo.setUserId(user.getUserId());
          if(file!=null)
             userInfo.setHeadSculpture(file.getBytes());
         if(userInfoBiz.updateUserInfo(userInfo)==1){
-            return new Result(Result.OK,"更新个人信息成功");
+            return Result.success("更新个人信息成功");
         }
-        return new Result(Result.FAIL,"更新失败");
+        return Result.error("更新失败");
     }
 
     @GetMapping("/loginInfo")
@@ -48,9 +46,9 @@ public class UserInfoController {
         if(user!=null){
             UserInfo info=userInfoBiz.getUserInfoById(user.getUserId());
             if(info!=null)
-                return new Result(Result.OK,"查询成功",info);
+                return Result.success("查询成功",info);
         }
-        return new Result(Result.FAIL,"错误",null);
+        return Result.error("错误");
     }
 
     @Autowired
