@@ -1,30 +1,39 @@
 package com.exam.config;
 
+import com.exam.interceptor.AuthInterceptor;
+import com.exam.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.exam.controller","com.exam.interceptor"})
 public class WebConfig implements WebMvcConfigurer{
-    private HandlerInterceptor interceptor;
+    private LoginInterceptor loginInterceptor;
 
     @Autowired
-    public void setInterceptor(HandlerInterceptor interceptor) {
-        this.interceptor = interceptor;
+    public void setLoginInterceptor(LoginInterceptor loginInterceptor) {
+        this.loginInterceptor = loginInterceptor;
+    }
+    private AuthInterceptor authInterceptor;
+
+    @Autowired
+    public void setAuthInterceptor(AuthInterceptor authInterceptor) {
+        this.authInterceptor = authInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interceptor)
+        registry.addInterceptor(loginInterceptor)
         .addPathPatterns("/**")
         .excludePathPatterns("/user/login","/user/register","/js/*");
+        registry.addInterceptor(authInterceptor)
+                .addPathPatterns("/base/**","/question/**","/questionList","/limitQuestionList");
     }
 
     @Override

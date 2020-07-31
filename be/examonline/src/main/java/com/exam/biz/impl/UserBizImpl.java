@@ -4,6 +4,8 @@ import com.exam.biz.UserBiz;
 import com.exam.biz.UserInfoBiz;
 import com.exam.dao.UserDao;
 import com.exam.entity.User;
+import com.exam.exception.UserExistException;
+import com.exam.exception.UserOrPwdErrorException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,16 +26,22 @@ public class UserBizImpl implements UserBiz {
     @Override
     @Transactional
     public User getUserByFormInfo(User user) {
-        return userDao.getUserByIdAndPwd(user.getUserId(),user.getPassword());
+         User user1=userDao.getUserByIdAndPwd(user.getUserId(),user.getPassword());
+         if(user1==null) throw  new UserOrPwdErrorException();
+         return user1;
     }
 
     @Override
     @Transactional
     public int registerUser(User user) {
-        int i = userDao.addUser(user);
-        log.debug("init personal basic user info >> id:"+user.getUserId());
-        int j = userInfoBiz.initUserInfo(user.getUserId());
-        return (i==0||j==0)?0:1;
+        try{
+            userDao.addUser(user);
+            log.debug("init personal basic user info >> id:"+user.getUserId());
+            userInfoBiz.initUserInfo(user.getUserId());
+        }catch (RuntimeException e){
+            throw new UserExistException();
+        }
+        return 1;
     }
 
     @Autowired

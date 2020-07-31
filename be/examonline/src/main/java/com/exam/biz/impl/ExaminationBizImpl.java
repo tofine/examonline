@@ -38,10 +38,8 @@ public class ExaminationBizImpl implements ExaminationBiz {
     @Override
     @Transactional
     public int correct(Integer baseId, ArrayList<ExaminationAnswer> answers) {
-        log.debug("answers from student >>> ");
         int sumScores=0;
         ArrayList<ExaminationAnswer> answersByBase = questionDao.getExaminationAnswersByBase(baseId);
-        log.debug("answers from database >>> "+answersByBase.toString());
         for(int i=0;i<answers.size();i++){
             ExaminationAnswer answer=answers.get(i);
             ExaminationAnswer answer1=answersByBase.get(i);

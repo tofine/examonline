@@ -3,6 +3,8 @@ package com.exam.biz.impl;
 import com.exam.biz.QuestionBiz;
 import com.exam.dao.QuestionDao;
 import com.exam.entity.Question;
+import com.exam.exception.DuplicateKeyException;
+import com.exam.exception.TargetResourceNotExitException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,21 +25,31 @@ public class QuestionBizImpl implements QuestionBiz {
     @CacheEvict(value = "question",allEntries = true)
     @Transactional
     public int addQuestion(Question question) {
-        return questionDao.addQuestion(question);
+        try{
+            return questionDao.addQuestion(question);
+        }catch (RuntimeException e){
+            throw new DuplicateKeyException();
+        }
     }
 
     @Override
     @CacheEvict(value = "question",allEntries = true)
     @Transactional
     public int deleteQuestion(Integer questionId) {
-        return questionDao.deleteQuestion(questionId);
+        int i=questionDao.deleteQuestion(questionId);
+        if(i==0)
+            throw new TargetResourceNotExitException();
+        return i;
     }
 
     @Override
     @CacheEvict(value = "question",allEntries = true)
     @Transactional
     public int updateQuestion(Question question) {
-        return questionDao.updateQuestion(question);
+        int i= questionDao.updateQuestion(question);
+        if(i==0)
+            throw new TargetResourceNotExitException();
+        return i;
     }
 
     @Override

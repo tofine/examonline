@@ -32,23 +32,17 @@ public class UserInfoController {
          User user=TokenUtil.getUser(request,redisTemplate);
          userInfo.setUserId(user.getUserId());
          if(file!=null)
-            userInfo.setHeadSculpture(file.getBytes());
-        if(userInfoBiz.updateUserInfo(userInfo)==1){
-            return Result.success("更新个人信息成功");
-        }
-        return Result.error("更新失败");
+             userInfo.setHeadSculpture(file.getBytes());
+         userInfoBiz.updateUserInfo(userInfo);
+         return Result.success("更新个人信息成功");
     }
 
     @GetMapping("/loginInfo")
     public Result getLoginInfo(HttpServletRequest request){
         User user= TokenUtil.getUser(request,redisTemplate);
         log.info("get user from redis >> "+user.toString());
-        if(user!=null){
-            UserInfo info=userInfoBiz.getUserInfoById(user.getUserId());
-            if(info!=null)
-                return Result.success("查询成功",info);
-        }
-        return Result.error("错误");
+        UserInfo info=userInfoBiz.getUserInfoById(user.getUserId());
+        return Result.success("查询成功",info);
     }
 
     @Autowired

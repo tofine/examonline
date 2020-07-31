@@ -22,20 +22,15 @@ public class FavoriteController {
 
     @PostMapping("/favorite")
     public Result setFavorite(@RequestBody Favorite favorite){
-        if(favoriteBiz.setFavorite(favorite)==1){
-            log.info("add a favorite record.  user:"+favorite.getUserId()+" base:"+favorite.getBaseId());
-            return Result.success("收藏成功");
-        }
-        return Result.error("收藏失败");
+        favoriteBiz.setFavorite(favorite);
+        log.info("add a favorite record.  user:"+favorite.getUserId()+" base:"+favorite.getBaseId());
+        return Result.success("收藏成功");
     }
 
     @DeleteMapping("/favorite")
     public Result cancelFavorite(@RequestBody Favorite favorite){
-        if(favoriteBiz.cancelFavorite(favorite)==1){
-            log.info("delete a favorite record.  user:"+favorite.getUserId()+" base:"+favorite.getBaseId());
-            return Result.success("取消收藏成功");
-        }
-        return Result.error("取消收藏失败");
+        log.info("delete a favorite record.  user:"+favorite.getUserId()+" base:"+favorite.getBaseId());
+        return Result.success("取消收藏成功");
     }
 
     @GetMapping("/favoriteBases") //查询收藏的题库列表
